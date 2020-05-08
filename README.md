@@ -34,36 +34,42 @@ The Class Name is MultiLinearRegression add the Header file MultiLinearRegressio
 
 *for loading data into object*
 >model.load(std::string);
+
 >model.load(arma::Mat<double>);
   
 ### 3. Spliting Data into Training and Test Data
 
 *By default 70% of the data is used as training data and rest as Test data*
 >model.split();
+
 >model.split(double)
 
 ### 4. Normalize the Data (recommended)
 
 *By delault the X data is normalized from 0 to 1*
 >model.normalize();
+
 >model.normalize(double, double);
 
 ### 5. Fitting the Model into the Trainig Data
 
 *Train the data from trainig dataset (default), with learing ration (0.1 default)*
 >model.fit();
+
 >model(int,double);
 
 ### 6. Error Checking in Hypothesis
 
 *Checks the error of Predicted Y to actual Y from training Data (default)*
 >model.fitError();
+
 >model.fitError(int);
 
 ### 7. Predict the Test data set
 
 *Returns the H for Test Data sets(default)*
 >model.predict();
+
 >model.predict(int);
 
 ### 8. Visualizing the Model for Each Feature
@@ -73,6 +79,7 @@ The Class Name is MultiLinearRegression add the Header file MultiLinearRegressio
 
 ### 9. Visualizing the Model for Real World Test cases
 
-*Plots a grpah between datapoint (strating from 1) vs Y, input type, Y label, Graph Title, lower and upper limit of normalization (0-1 default)
+*Plots a grpah between datapoint (strating from 1) vs Y, input data, Y label, Graph Title, lower and upper limit of normalization (0-1 default)
 >model.plot(std::string, const char \*, const char \*, double, double);
+
 >model.plot(arama::Mat<double>, const char \*, const char \*, double, double);
