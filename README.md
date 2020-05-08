@@ -20,7 +20,7 @@ C++ based Multi Variable Linear Regression with Visualizations and in-depth twee
 
 The Class Name is MultiLinearRegression add the Header file MultiLinearRegression.h in your file
 
-1. Constructors
+### 1. Constructors
 
 *for loading data into the object through file path*
 
@@ -30,48 +30,48 @@ The Class Name is MultiLinearRegression add the Header file MultiLinearRegressio
 
 >MultiLinearRegression model(arma::Mat<double>);
   
-2. load function
+### 2. load function
 
 *for loading data into object*
 >model.load(std::string);
 >model.load(arma::Mat<double>);
   
-3. Spliting Data into Training and Test Data
+### 3. Spliting Data into Training and Test Data
 
 *By default 70% of the data is used as training data and rest as Test data*
 >model.split();
 >model.split(double)
 
-4. Normalize the Data (recommended)
+### 4. Normalize the Data (recommended)
 
 *By delault the X data is normalized from 0 to 1*
 >model.normalize();
 >model.normalize(double, double);
 
-5. Fitting the Model into the Trainig Data
+### 5. Fitting the Model into the Trainig Data
 
 *Train the data from trainig dataset (default), with learing ration (0.1 default)*
 >model.fit();
 >model(int,double);
 
-6. Error Checking in Hypothesis
+### 6. Error Checking in Hypothesis
 
 *Checks the error of Predicted Y to actual Y from training Data (default)*
 >model.fitError();
 >model.fitError(int);
 
-7. Predict the Test data set
+### 7. Predict the Test data set
 
 *Returns the H for Test Data sets(default)*
 >model.predict();
 >model.predict(int);
 
-8. Visualizing the Model for Each Feature
+### 8. Visualizing the Model for Each Feature
 
 *plots a graph between column (0-indexed) vs Y, with X label, Y label, Graph Title, Type of Graph*
 >model.plotModel(int, const char\*, const char\*, const char\*, int);
 
-9. Visualizing the Model for Real World Test cases
+### 9. Visualizing the Model for Real World Test cases
 
 *Plots a grpah between datapoint (strating from 1) vs Y, input type, Y label, Graph Title, lower and upper limit of normalization (0-1 default)
 >model.plot(std::string, const char \*, const char \*, double, double);
