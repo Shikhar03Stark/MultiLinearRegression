@@ -311,12 +311,18 @@ Mat<double>& MultiLinearRegression::fitError(int type) {
 			if (isDataFit) {
 				if (type == 0) { //Error over Training Set
 					Mat<double>* FE = new Mat<double>(Xtrain.n_rows, 1, fill::zeros);
-					*FE = (Xtrain * weight) - Ytrain;
+					*FE = ((Xtrain * weight) - Ytrain);
+					for (int i = 0; i < (*FE).n_rows; i++) {
+						(*FE)(i, 0) = (*FE)(i, 0) / Ytrain(i, 0);
+					}
 					return (*FE);
 				}
 				else if (type == 1) { //Error over Testing Set
 					Mat<double>* FE = new Mat<double>(Xtest.n_rows, 1, fill::zeros);
-					*FE = (Xtest * weight) - Ytest;
+					*FE = ((Xtest * weight) - Ytest)/Ytest;
+					for (int i = 0; i < (*FE).n_rows; i++) {
+						(*FE)(i, 0) = (*FE)(i, 0) / Ytest(i, 0);
+					}
 					return (*FE);
 				}
 				else {
@@ -880,13 +886,13 @@ void MultiLinearRegression::plot(Mat<double>& input, const char* ylabel, const c
 				pls->env(xmin, xmax, ymin, ymax, 0, 0);
 				pls->lab("Data Points", ylabel, title);
 
+				//pls->col0(2);
+				//for (int i = 0; i < points; i++) {
+				//	pls->join(x[i], y[i], xmin, y[i]);
+				//}
 				pls->col0(12);
 				pls->poin(points, x, y, '+');
 
-				pls->col0(2);
-				for (int i = 0; i < points; i++) {
-					pls->join(x[i], y[i], xmin, y[i]);
-				}
 				delete pls;
 				return;
 			}
@@ -977,13 +983,13 @@ void MultiLinearRegression::plot(std::string path, const char* ylabel, const cha
 					pls->env(xmin, xmax, ymin, ymax, 0, 0);
 					pls->lab("Data Points", ylabel, title);
 
+					//pls->col0(10);
+					//for (int i = 0; i < points; i++) {
+					//	pls->join(x[i], y[i], xmin, y[i]);
+					//}
+
 					pls->col0(12);
 					pls->poin(points, x, y, '+');
-
-					pls->col0(10);
-					for (int i = 0; i < points; i++) {
-						pls->join(x[i], y[i], xmin, y[i]);
-					}
 					delete pls;
 					return;
 				}

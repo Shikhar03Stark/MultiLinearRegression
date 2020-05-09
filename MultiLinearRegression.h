@@ -47,7 +47,7 @@ public:
 	//Error checking, MSE, type = 0 train data, 1 test data
 	Mat<double>& fitError(int type = 0);
 
-	//predict test data, type = 0 test data (default), -1 training data, 1 whole data set
+	//predict test data, type = 0 test data (default), 1 training data
 	Mat<double>& predict(int type = 0);
 	//predict real world data over fiited weights
 	Mat<double>& predict(Mat<double>& input, double l = 0, double u = 1);
