@@ -10,6 +10,7 @@ int main() {
 	model.normalize(0, 10);
 	model.fit();
 	model.plot("../data/tipping/test.csv", "Tips Recieved", "Predictions 100%");
+	cout << model.predict("../data/tipping/test.csv") << endl;
 	cin.get();
 	return 0;
 }

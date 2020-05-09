@@ -49,8 +49,10 @@ public:
 
 	//predict test data, type = 0 test data (default), -1 training data, 1 whole data set
 	Mat<double>& predict(int type = 0);
-	Mat<double>& predict(Mat<double>& input, double l = 0, double r = 1);
-	Mat<double>& predict(std::string path, double l = 0, double r = 1);
+	//predict real world data over fiited weights
+	Mat<double>& predict(Mat<double>& input, double l = 0, double u = 1);
+	//predict real world data over fiited weights
+	Mat<double>& predict(std::string path, double l = 0, double u = 1);
 
 	//plot data, type = 0 training data (default), 1 test data, 2 whole data
 	//-1 test data with Prediction, -2 training data with Prediction, -3 whole data with Prediction

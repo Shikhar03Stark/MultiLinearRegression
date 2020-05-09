@@ -377,10 +377,118 @@ Mat<double>& MultiLinearRegression::predict(int type) {
 	}
 }
 
+//predict Real World Data over fitted weights
+Mat<double>& MultiLinearRegression::predict(Mat<double>& input, double l, double u) {
+	if (isDataLoaded) {
+		if (isDataFit) {
+			if (input.n_cols != n_feature) {
+				std::cout << "Matrix doesn't match with Number of Features...\n";
+				return *(new Mat<double>(0,0));
+			}
+			else {
+				//normalize
+				l = lbound;
+				u = ubound;
+				for (int j = 0; j < n_feature; j++) {
+					double min = double(INT_MAX);
+					double max = double(INT_MIN);
+					for (int i = 0; i < input.n_rows; i++) {
+						if (input(i, j) < min) {
+							min = input(i, j);
+						}
+						if (input(i, j) > max) {
+							max = input(i, j);
+						}
+					}
+					if (min == max) {
+						input.col(j).fill(u);
+					}
+					else {
+						input.col(j) = l + (input.col(j) - min) * (u - l) / (max - min);
+					}
+				}
+
+				//convert to X
+				Mat<double> M = Mat<double>(input.n_rows, 1, fill::ones);
+				M.insert_cols(0, input);
+
+				Mat<double>* H = new Mat<double>;
+				*H = (M * weight);
+
+				return (*H);
+			}
+		}
+		else {
+			std::cout << "Model is not Fitted over any Training Set...\n";
+			return *(new Mat<double>(0, 0));
+		}
+	}
+	else {
+		std::cout << "No Data Loaded to Train the Model...\n";
+		return *(new Mat<double>(0, 0));
+	}
+}
+
+//predict Real World Data over fitted weights
+Mat<double>& MultiLinearRegression::predict(std::string path, double l, double u) {
+	Mat<double> input;
+	input.load(path);
+	if (isDataLoaded) {
+		if (isDataFit) {
+			if (input.n_cols != n_feature) {
+				std::cout << "Matrix doesn't match with Number of Features...\n";
+				return *(new Mat<double>(0,0));
+			}
+			else {
+				//normalize
+				l = lbound;
+				u = ubound;
+				for (int j = 0; j < n_feature; j++) {
+					double min = double(INT_MAX);
+					double max = double(INT_MIN);
+					for (int i = 0; i < input.n_rows; i++) {
+						if (input(i, j) < min) {
+							min = input(i, j);
+						}
+						if (input(i, j) > max) {
+							max = input(i, j);
+						}
+					}
+					if (min == max) {
+						input.col(j).fill(u);
+					}
+					else {
+						input.col(j) = l + (input.col(j) - min) * (u - l) / (max - min);
+					}
+				}
+
+				//convert to X
+				Mat<double> M = Mat<double>(input.n_rows, 1, fill::ones);
+				M.insert_cols(0, input);
+
+				Mat<double>* H = new Mat<double>;
+				*H = (M * weight);
+
+				return (*H);
+			}
+		}
+		else {
+			std::cout << "Model is not Fitted over any Training Set...\n";
+			return *(new Mat<double>(0, 0));
+		}
+	}
+	else {
+		std::cout << "No Data Loaded to Train the Model...\n";
+		return *(new Mat<double>(0, 0));
+	}
+}
+
+
 //ploting the model Attributes
 void MultiLinearRegression::plotModel(int col, const char* xlabel, const char* ylabel, const char* title, int type) {
 	if (isDataLoaded) {
-		if (type == 0) { //plot point training data
+		if (isDataSplit) {
+			if (type == 0) { //plot point training data
 			const int ticks = 1000;
 			double x[ticks], y[ticks];
 			double xmin, xmax, ymin, ymax;
@@ -422,8 +530,7 @@ void MultiLinearRegression::plotModel(int col, const char* xlabel, const char* y
 			delete pls;
 			return;
 		}
-		if (isDataSplit) {
-			if (type == 1) { //plot point test data
+			else if (type == 1) { //plot point test data
 				const int ticks = 1000;
 				double x[ticks], y[ticks];
 				double xmin, xmax, ymin, ymax;
