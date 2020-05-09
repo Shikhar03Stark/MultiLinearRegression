@@ -72,6 +72,11 @@ The Class Name is MultiLinearRegression add the Header file MultiLinearRegressio
 
 >model.predict(int);
 
+*Returns the H for Real World Test Data, with normaliztion (0-1 default)*
+>model.predict(std::string, double, double);
+
+>model.predict(arma::Mat<double>, double, double);
+
 ### 8. Visualizing the Model for Each Feature
 
 *plots a graph between column (0-indexed) vs Y, with X label, Y label, Graph Title, Type of Graph*
